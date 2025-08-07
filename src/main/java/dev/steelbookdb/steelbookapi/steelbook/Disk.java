@@ -29,12 +29,13 @@ public class Disk extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DiskFormat format;
     private String region;
+    private boolean isBonusDisk;
 
     @ManyToMany(mappedBy = "disks")
     private Set<Steelbook> steelbooks;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", nullable = true)
     private Movie movie;
 
     @ManyToMany
