@@ -6,6 +6,8 @@ import dev.steelbookdb.steelbookapi.BaseEntity;
 import dev.steelbookdb.steelbookapi.localization.Language;
 import dev.steelbookdb.steelbookapi.movie.Movie;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -24,7 +26,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "disks")
 public class Disk extends BaseEntity {
     
-    private String format;
+    @Enumerated(EnumType.STRING)
+    private DiskFormat format;
     private String region;
 
     @ManyToMany(mappedBy = "disks")
