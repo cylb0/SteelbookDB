@@ -1,7 +1,11 @@
 package dev.steelbookdb.steelbookapi.models.localization;
 
+import java.util.Set;
+
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import dev.steelbookdb.steelbookapi.models.movie.MovieTranslation;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +22,8 @@ public class Language extends BaseEntity {
 
     private String code;
     private String name;
+
+    @OneToMany(mappedBy = "language")
+    private Set<MovieTranslation> movieTranslations;
+
 }
