@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "movie_translations")
 public class MovieTranslation extends BaseEntity {
 
-    private String languageCode;
     private String title;
     private String summary;
 
