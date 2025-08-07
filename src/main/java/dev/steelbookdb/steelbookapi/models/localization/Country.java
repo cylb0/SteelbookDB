@@ -1,7 +1,11 @@
 package dev.steelbookdb.steelbookapi.models.localization;
 
+import java.util.Set;
+
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import dev.steelbookdb.steelbookapi.models.steelbook.Editor;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,4 +21,7 @@ import lombok.NoArgsConstructor;
 public class Country extends BaseEntity {
 
     private String name;
+
+    @OneToMany(mappedBy = "country")
+    private Set<Editor> editors;
 }

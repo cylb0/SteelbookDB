@@ -1,7 +1,10 @@
 package dev.steelbookdb.steelbookapi.models.steelbook;
 
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import dev.steelbookdb.steelbookapi.models.localization.Country;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +21,8 @@ public class Editor extends BaseEntity {
 
     private String name;
     private String website;
+    
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 }
