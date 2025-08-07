@@ -1,6 +1,7 @@
 package dev.steelbookdb.steelbookapi.models.steelbook;
 
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import dev.steelbookdb.steelbookapi.models.localization.Language;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,4 +18,8 @@ public class AudioTrack extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "audio_format_id")
     private AudioFormat audioFormat;
+
+    @ManyToOne
+    @JoinColumn(name = "language_id")
+    private Language language;
 }

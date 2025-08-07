@@ -4,6 +4,7 @@ import java.util.Set;
 
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
 import dev.steelbookdb.steelbookapi.models.movie.MovieTranslation;
+import dev.steelbookdb.steelbookapi.models.steelbook.AudioTrack;
 import dev.steelbookdb.steelbookapi.models.steelbook.Disk;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -30,5 +31,8 @@ public class Language extends BaseEntity {
 
     @ManyToMany(mappedBy = "subtitleLanguages")
     private Set<Disk> disksWithSubDisks;
+    
+    @OneToMany(mappedBy = "language")
+    private Set<AudioTrack> audioTracks;
 
 }
