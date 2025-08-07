@@ -1,6 +1,6 @@
 package dev.steelbookdb.steelbookapi.models.movie;
 
-import java.util.List;
+import java.util.Set;
 
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
 import jakarta.persistence.Entity;
@@ -31,6 +31,6 @@ public class Movie extends BaseEntity {
     private Director director;
 
     @OneToMany(mappedBy = "movie")
-    private List<MovieTranslation> movieTranslations;
+    private Set<MovieTranslation> movieTranslations;
 
 }
