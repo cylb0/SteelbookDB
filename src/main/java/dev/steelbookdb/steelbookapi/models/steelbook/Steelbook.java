@@ -37,4 +37,12 @@ public class Steelbook extends BaseEntity {
         inverseJoinColumns = @JoinColumn(name = "retailer_id")
     )
     private Set<Retailer> retailers;
+
+    @ManyToMany
+    @JoinTable(
+        name = "steelbook_disks",
+        joinColumns = @JoinColumn(name = "steelbook_id"),
+        inverseJoinColumns = @JoinColumn(name = "disk_id")
+    )
+    private Set<Disk> disks;
 }
