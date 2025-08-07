@@ -1,8 +1,8 @@
-package dev.steelbookdb.steelbookapi.models.steelbook;
+package dev.steelbookdb.steelbookapi.steelbook;
 
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import dev.steelbookdb.steelbookapi.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;

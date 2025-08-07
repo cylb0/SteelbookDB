@@ -1,10 +1,10 @@
-package dev.steelbookdb.steelbookapi.models.movie;
+package dev.steelbookdb.steelbookapi.movie;
 
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.models.BaseEntity;
-import dev.steelbookdb.steelbookapi.models.steelbook.Disk;
-import dev.steelbookdb.steelbookapi.models.steelbook.Steelbook;
+import dev.steelbookdb.steelbookapi.BaseEntity;
+import dev.steelbookdb.steelbookapi.steelbook.Disk;
+import dev.steelbookdb.steelbookapi.steelbook.Steelbook;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;

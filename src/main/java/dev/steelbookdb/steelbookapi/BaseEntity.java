@@ -1,4 +1,4 @@
-package dev.steelbookdb.steelbookapi.models;
+package dev.steelbookdb.steelbookapi;
 
 import java.time.LocalDateTime;
 

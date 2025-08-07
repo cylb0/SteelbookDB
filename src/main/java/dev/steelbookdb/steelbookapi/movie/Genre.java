@@ -1,7 +1,10 @@
-package dev.steelbookdb.steelbookapi.models.steelbook;
+package dev.steelbookdb.steelbookapi.movie;
 
-import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import java.util.Set;
+
+import dev.steelbookdb.steelbookapi.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,11 +13,14 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Data
-@Entity
 @EqualsAndHashCode(callSuper = true)
+@Entity
 @NoArgsConstructor
-@Table(name = "audio_formats")
-public class AudioFormat extends BaseEntity {
-
+@Table(name = "genres")
+public class Genre extends BaseEntity {
+    
     private String name;
+
+    @ManyToMany(mappedBy = "genres")
+    private Set<Movie> movies;
 }

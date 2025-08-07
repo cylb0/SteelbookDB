@@ -1,7 +1,7 @@
-package dev.steelbookdb.steelbookapi.models.movie;
+package dev.steelbookdb.steelbookapi.movie;
 
-import dev.steelbookdb.steelbookapi.models.BaseEntity;
-import dev.steelbookdb.steelbookapi.models.localization.Language;
+import dev.steelbookdb.steelbookapi.BaseEntity;
+import dev.steelbookdb.steelbookapi.localization.Language;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

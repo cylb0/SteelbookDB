@@ -1,10 +1,11 @@
-package dev.steelbookdb.steelbookapi.models.movie;
+package dev.steelbookdb.steelbookapi.localization;
 
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import dev.steelbookdb.steelbookapi.BaseEntity;
+import dev.steelbookdb.steelbookapi.steelbook.Editor;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,11 +17,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
-@Table(name = "genres")
-public class Genre extends BaseEntity {
-    
+@Table(name = "countries")
+public class Country extends BaseEntity {
+
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
-    private Set<Movie> movies;
+    @OneToMany(mappedBy = "country")
+    private Set<Editor> editors;
 }

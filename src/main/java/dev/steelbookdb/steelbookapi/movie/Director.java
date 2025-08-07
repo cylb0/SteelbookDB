@@ -1,9 +1,8 @@
-package dev.steelbookdb.steelbookapi.models.localization;
+package dev.steelbookdb.steelbookapi.movie;
 
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.models.BaseEntity;
-import dev.steelbookdb.steelbookapi.models.steelbook.Editor;
+import dev.steelbookdb.steelbookapi.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,11 +16,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
-@Table(name = "countries")
-public class Country extends BaseEntity {
+@Table(name = "directors")
+public class Director extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "country")
-    private Set<Editor> editors;
+    @OneToMany(mappedBy = "director")
+    private Set<Movie> movies;
 }

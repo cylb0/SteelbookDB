@@ -1,11 +1,11 @@
-package dev.steelbookdb.steelbookapi.models.localization;
+package dev.steelbookdb.steelbookapi.localization;
 
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.models.BaseEntity;
-import dev.steelbookdb.steelbookapi.models.movie.MovieTranslation;
-import dev.steelbookdb.steelbookapi.models.steelbook.AudioTrack;
-import dev.steelbookdb.steelbookapi.models.steelbook.Disk;
+import dev.steelbookdb.steelbookapi.BaseEntity;
+import dev.steelbookdb.steelbookapi.movie.MovieTranslation;
+import dev.steelbookdb.steelbookapi.steelbook.AudioTrack;
+import dev.steelbookdb.steelbookapi.steelbook.Disk;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
