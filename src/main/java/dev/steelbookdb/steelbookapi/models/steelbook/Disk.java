@@ -36,6 +36,14 @@ public class Disk extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
+        name = "disk_audiotracks",
+        joinColumns = @JoinColumn(name = "disk_id"),
+        inverseJoinColumns = @JoinColumn(name = "audio_track_id")
+    )
+    private Set<AudioTrack> audioTracks;
+
+    @ManyToMany
+    @JoinTable(
         name = "disk_subtitles",
         joinColumns = @JoinColumn(name = "disk_id"),
         inverseJoinColumns = @JoinColumn(name = "language_id")
