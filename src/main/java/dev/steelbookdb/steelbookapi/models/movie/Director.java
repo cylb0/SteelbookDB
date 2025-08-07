@@ -1,7 +1,10 @@
 package dev.steelbookdb.steelbookapi.models.movie;
 
+import java.util.List;
+
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +21,6 @@ public class Director extends BaseEntity {
 
     private String name;
 
+    @OneToMany(mappedBy = "director")
+    private List<Movie> movies;
 }

@@ -2,6 +2,8 @@ package dev.steelbookdb.steelbookapi.models.movie;
 
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +22,9 @@ public class Movie extends BaseEntity {
     private int releaseYear;
     private int runtime;
     private String posterUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "director_id")
+    private Director director;
 
 }
