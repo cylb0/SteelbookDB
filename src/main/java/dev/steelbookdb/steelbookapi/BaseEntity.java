@@ -17,7 +17,7 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
