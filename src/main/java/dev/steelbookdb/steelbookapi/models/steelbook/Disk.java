@@ -3,8 +3,11 @@ package dev.steelbookdb.steelbookapi.models.steelbook;
 import java.util.Set;
 
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
+import dev.steelbookdb.steelbookapi.models.movie.Movie;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,4 +27,8 @@ public class Disk extends BaseEntity {
 
     @ManyToMany(mappedBy = "disks")
     private Set<Steelbook> steelbooks;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 }
