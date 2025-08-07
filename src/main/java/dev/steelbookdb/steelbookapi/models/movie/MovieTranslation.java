@@ -2,6 +2,8 @@ package dev.steelbookdb.steelbookapi.models.movie;
 
 import dev.steelbookdb.steelbookapi.models.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,4 +21,8 @@ public class MovieTranslation extends BaseEntity {
     private String languageCode;
     private String title;
     private String summary;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 }
