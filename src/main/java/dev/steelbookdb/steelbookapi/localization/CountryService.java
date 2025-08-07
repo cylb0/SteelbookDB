@@ -9,5 +9,5 @@ import lombok.RequiredArgsConstructor;
 public class CountryService {
 
     private final CountryMapper countryMapper;
-    private final CountryService countryService;
+    private final CountryRepository countryRepository;
 }
