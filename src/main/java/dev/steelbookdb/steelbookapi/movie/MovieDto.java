@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 public record MovieDto(
-    Long ig,
+    Long id,
     String title,
     int releaseYear,
-    int runTime,
+    int runtime,
     String posterUrl,
     DirectorDto director,
     Set<String> genres,
