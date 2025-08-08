@@ -4,6 +4,7 @@ import java.util.Set;
 
 import dev.steelbookdb.steelbookapi.BaseEntity;
 import dev.steelbookdb.steelbookapi.steelbook.editor.Editor;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -20,7 +21,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "countries")
 public class Country extends BaseEntity {
 
+    @Column(unique = true, nullable = false)
     private String name;
+
+    public Country(String name) {
+        this.name = name;
+    }
 
     @OneToMany(mappedBy = "country")
     private Set<Editor> editors;

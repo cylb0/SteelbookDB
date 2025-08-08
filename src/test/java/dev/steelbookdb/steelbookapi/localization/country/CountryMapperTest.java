@@ -1,4 +1,4 @@
-package dev.steelbookdb.steelbookapi.localization;
+package dev.steelbookdb.steelbookapi.localization.country;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -6,9 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-import dev.steelbookdb.steelbookapi.localization.country.Country;
-import dev.steelbookdb.steelbookapi.localization.country.CountryDto;
-import dev.steelbookdb.steelbookapi.localization.country.CountryMapper;
+import dev.steelbookdb.steelbookapi.localization.country.dto.CountryDto;
+import dev.steelbookdb.steelbookapi.localization.country.dto.CreateCountryDto;
 
 class CountryMapperTest {
 
@@ -32,4 +31,20 @@ class CountryMapperTest {
         CountryDto countryDto = countryMapper.toDto(null);
         assertNull(countryDto);
     }
+
+    @Test
+    void testToEntity_CorrectlyMaps_GivenCreateCountryDto() {
+        CreateCountryDto createCountryDto = new CreateCountryDto("France");
+
+        Country country = countryMapper.toEntity(createCountryDto);
+
+        assertNotNull(country);
+        assertEquals(createCountryDto.name(), country.getName());
+    }
+
+    @Test
+    void testToEntity_ReturnsNull_GivenNullDto() {
+        Country country = countryMapper.toEntity(null);
+        assertNull(country);
+    }   
 }
