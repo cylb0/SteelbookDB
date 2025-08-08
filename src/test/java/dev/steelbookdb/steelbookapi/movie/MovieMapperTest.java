@@ -2,6 +2,7 @@ package dev.steelbookdb.steelbookapi.movie;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
 
 import java.util.Set;
 
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,9 +47,9 @@ class MovieMapperTest {
         movie.setGenres(Set.of(genre));
         movie.setMovieTranslations(Set.of(translation));
 
-        Mockito.when(directorMapper.toDto(director))
+        when(directorMapper.toDto(director))
             .thenReturn(new DirectorDto(director.getId(), director.getName()));
-        Mockito.when(movieTranslationMapper.toDto(translation))
+        when(movieTranslationMapper.toDto(translation))
             .thenReturn(new MovieTranslationDto(translation.getId(), "fr", translation.getTitle(), translation.getSummary()));
         
         MovieDto dto = movieMapper.toDto(movie);

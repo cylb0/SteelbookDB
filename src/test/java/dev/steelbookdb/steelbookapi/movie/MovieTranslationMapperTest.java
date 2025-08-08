@@ -2,18 +2,19 @@ package dev.steelbookdb.steelbookapi.movie;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.localization.Language;
 import dev.steelbookdb.steelbookapi.localization.LanguageDto;
 import dev.steelbookdb.steelbookapi.localization.LanguageMapper;
 
+@ExtendWith(MockitoExtension.class)
 class MovieTranslationMapperTest {
 
     @Mock
@@ -21,11 +22,6 @@ class MovieTranslationMapperTest {
 
     @InjectMocks
     private MovieTranslationMapper movieTranslationMapper;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void toDto_CorrectlyMaps_GivenMovieTranslationEntity() {
@@ -37,7 +33,7 @@ class MovieTranslationMapperTest {
         movieTranslation.setSummary("A great movie.");
         movieTranslation.setLanguage(language);
         
-        Mockito.when(languageMapper.toDto(language))
+        when(languageMapper.toDto(language))
             .thenReturn(new LanguageDto(1L, "en", "English"));
 
         MovieTranslationDto dto = movieTranslationMapper.toDto(movieTranslation);
