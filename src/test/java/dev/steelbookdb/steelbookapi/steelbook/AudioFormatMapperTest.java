@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormat;
+import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormatDto;
+import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormatMapper;
+
 class AudioFormatMapperTest {
 
     private AudioFormatMapper audioFormatMapper = new AudioFormatMapper();

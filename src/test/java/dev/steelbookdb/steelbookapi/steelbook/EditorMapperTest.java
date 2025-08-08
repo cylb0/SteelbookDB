@@ -10,9 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.steelbookdb.steelbookapi.localization.Country;
-import dev.steelbookdb.steelbookapi.localization.CountryDto;
-import dev.steelbookdb.steelbookapi.localization.CountryMapper;
+import dev.steelbookdb.steelbookapi.localization.country.Country;
+import dev.steelbookdb.steelbookapi.localization.country.CountryMapper;
+import dev.steelbookdb.steelbookapi.localization.country.dto.CountryDto;
+import dev.steelbookdb.steelbookapi.steelbook.editor.Editor;
+import dev.steelbookdb.steelbookapi.steelbook.editor.EditorDto;
+import dev.steelbookdb.steelbookapi.steelbook.editor.EditorMapper;
 
 @ExtendWith(MockitoExtension.class)
 class EditorMapperTest {

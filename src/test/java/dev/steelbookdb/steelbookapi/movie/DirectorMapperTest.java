@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
+import dev.steelbookdb.steelbookapi.movie.director.Director;
+import dev.steelbookdb.steelbookapi.movie.director.DirectorDto;
+import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
+
 class DirectorMapperTest {
 
     private final DirectorMapper directorMapper = new DirectorMapper();
