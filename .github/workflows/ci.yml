@@ -10,8 +10,24 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    services:
+      progress
+      image: postgres:latest
+      env:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: steelbook_db
+      ports:
+        - 5432:5432
+      options: >-
+        --health-cmd "pg_isready -U postgres"
+        --health-interval 10s
+        --health-timeout 5s
+        --health-retries 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -19,4 +35,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: Build and test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/steelbook_db
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: password
         run: mvn clean verify --no-transfer-progress
