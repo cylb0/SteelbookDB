@@ -46,7 +46,7 @@ class AudioTrackMapperTest {
         when(languageMapper.toDto(language))
             .thenReturn(new LanguageDto(language.getId(), language.getCode(), language.getName()));
 
-        AudioTrackDto dto = audioTrackMapper.tDto(audioTrack);
+        AudioTrackDto dto = audioTrackMapper.toDto(audioTrack);
         
         assertNotNull(dto);
         assert dto.id() == audioTrack.getId();
@@ -60,7 +60,7 @@ class AudioTrackMapperTest {
 
     @Test
     void toDto_ReturnsNull_WhenAudioTrackIsNull() {
-        AudioTrackDto dto = audioTrackMapper.tDto(null);
+        AudioTrackDto dto = audioTrackMapper.toDto(null);
         assertNull(dto);
     }   
 }

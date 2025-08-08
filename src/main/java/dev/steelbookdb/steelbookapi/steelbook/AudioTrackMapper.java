@@ -12,7 +12,7 @@ public class AudioTrackMapper {
     private final AudioFormatMapper audioFormatMapper;
     private final LanguageMapper languageMapper;
 
-    public AudioTrackDto tDto(AudioTrack audioTrack) {
+    public AudioTrackDto toDto(AudioTrack audioTrack) {
         if (audioTrack == null) return null;
 
         return new AudioTrackDto(
