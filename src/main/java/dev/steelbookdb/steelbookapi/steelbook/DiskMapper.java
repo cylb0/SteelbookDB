@@ -25,14 +25,14 @@ public class DiskMapper {
             disk.getRegion(),
             disk.isBonusDisk(),
             disk.getMovie() != null ? movieMapper.toDto(disk.getMovie()) : null,
-            disk.getAudioTracks()
+            disk.getAudioTracks() != null ? disk.getAudioTracks()
                 .stream()
                 .map(audioTrackMapper::toDto)
-                .collect(Collectors.toSet()),
-            disk.getSubtitleLanguages()
-            .stream()
+                .collect(Collectors.toSet()) : java.util.Collections.emptySet(),
+            disk.getSubtitleLanguages() != null ? disk.getSubtitleLanguages()
+                .stream()
                 .map(languageMapper::toDto)
-                .collect(Collectors.toSet())
+                .collect(Collectors.toSet()) : java.util.Collections.emptySet()
         );
     }
 }

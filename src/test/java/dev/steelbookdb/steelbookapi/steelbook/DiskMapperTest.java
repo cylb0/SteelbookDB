@@ -80,4 +80,19 @@ class DiskMapperTest {
         DiskDto dto = diskMapper.toDto(null);
         assertEquals(null, dto);
     }
+
+    @Test
+    void toDto_ReturnsEmptySets_WhenDiskHasNoAudioTracksOrSubtitleLanguages() {
+        Disk disk = new Disk();
+        disk.setFormat(DiskFormat.BLU_RAY_DISC);
+        disk.setAudioTracks(Set.of());
+
+        DiskDto dto = diskMapper.toDto(disk);
+
+        assertNotNull(dto);
+        assertNotNull(dto.audioTracks());
+        assert dto.audioTracks().isEmpty();
+        assertNotNull(dto.subtitleLanguages());
+        assert dto.subtitleLanguages().isEmpty();
+    }
 }
