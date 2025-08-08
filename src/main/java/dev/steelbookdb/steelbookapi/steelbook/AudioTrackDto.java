@@ -5,7 +5,7 @@ import dev.steelbookdb.steelbookapi.localization.LanguageDto;
 public record AudioTrackDto(
     Long id,
     AudioFormatDto audioFormat,
-    LanguageDto languag
+    LanguageDto language
 ) {
 
 }
