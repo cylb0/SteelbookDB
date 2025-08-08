@@ -6,6 +6,7 @@ import dev.steelbookdb.steelbookapi.BaseEntity;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslation;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrack;
 import dev.steelbookdb.steelbookapi.steelbook.disk.Disk;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -23,7 +24,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "languages")
 public class Language extends BaseEntity {
 
+    @Column(nullable = false, unique = true)
     private String code;
+    @Column(nullable = false, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "language")
