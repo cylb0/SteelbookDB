@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
+import dev.steelbookdb.steelbookapi.localization.language.Language;
+import dev.steelbookdb.steelbookapi.localization.language.LanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
+
 class LanguageMapperTest {
 
     private final LanguageMapper languageMapper = new LanguageMapper();

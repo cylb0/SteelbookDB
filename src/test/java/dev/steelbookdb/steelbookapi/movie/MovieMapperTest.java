@@ -12,6 +12,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.steelbookdb.steelbookapi.movie.director.Director;
+import dev.steelbookdb.steelbookapi.movie.director.DirectorDto;
+import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
+import dev.steelbookdb.steelbookapi.movie.genre.Genre;
+import dev.steelbookdb.steelbookapi.movie.movie.Movie;
+import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
+import dev.steelbookdb.steelbookapi.movie.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslation;
+import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationDto;
+import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationMapper;
+
 @ExtendWith(MockitoExtension.class)
 class MovieMapperTest {
 

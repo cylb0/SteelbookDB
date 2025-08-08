@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
+import dev.steelbookdb.steelbookapi.movie.genre.Genre;
+import dev.steelbookdb.steelbookapi.movie.genre.GenreDto;
+import dev.steelbookdb.steelbookapi.movie.genre.GenreMapper;
+
 class GenreMapperTest {
 
     private final GenreMapper genreMapper = new GenreMapper();

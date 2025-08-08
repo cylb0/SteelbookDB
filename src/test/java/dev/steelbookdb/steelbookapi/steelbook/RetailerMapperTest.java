@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
+import dev.steelbookdb.steelbookapi.steelbook.retailer.Retailer;
+import dev.steelbookdb.steelbookapi.steelbook.retailer.RetailerDto;
+import dev.steelbookdb.steelbookapi.steelbook.retailer.RetailerMapper;
+
 class RetailerMapperTest {
 
     private RetailerMapper retailerMapper = new RetailerMapper();

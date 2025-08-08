@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
+import dev.steelbookdb.steelbookapi.localization.country.Country;
+import dev.steelbookdb.steelbookapi.localization.country.CountryDto;
+import dev.steelbookdb.steelbookapi.localization.country.CountryMapper;
+
 class CountryMapperTest {
 
     private final CountryMapper countryMapper = new CountryMapper();

@@ -14,12 +14,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.steelbookdb.steelbookapi.localization.Language;
-import dev.steelbookdb.steelbookapi.localization.LanguageDto;
-import dev.steelbookdb.steelbookapi.localization.LanguageMapper;
-import dev.steelbookdb.steelbookapi.movie.Movie;
-import dev.steelbookdb.steelbookapi.movie.MovieDto;
-import dev.steelbookdb.steelbookapi.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.localization.language.Language;
+import dev.steelbookdb.steelbookapi.localization.language.LanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
+import dev.steelbookdb.steelbookapi.movie.movie.Movie;
+import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
+import dev.steelbookdb.steelbookapi.movie.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrack;
+import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackDto;
+import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackMapper;
+import dev.steelbookdb.steelbookapi.steelbook.disk.BlurayRegion;
+import dev.steelbookdb.steelbookapi.steelbook.disk.Disk;
+import dev.steelbookdb.steelbookapi.steelbook.disk.DiskDto;
+import dev.steelbookdb.steelbookapi.steelbook.disk.DiskFormat;
+import dev.steelbookdb.steelbookapi.steelbook.disk.DiskMapper;
 
 @ExtendWith(MockitoExtension.class)
 class DiskMapperTest {

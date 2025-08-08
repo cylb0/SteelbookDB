@@ -14,10 +14,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.steelbookdb.steelbookapi.movie.Director;
-import dev.steelbookdb.steelbookapi.movie.Movie;
-import dev.steelbookdb.steelbookapi.movie.MovieDto;
-import dev.steelbookdb.steelbookapi.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.movie.director.Director;
+import dev.steelbookdb.steelbookapi.movie.movie.Movie;
+import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
+import dev.steelbookdb.steelbookapi.movie.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.steelbook.disk.Disk;
+import dev.steelbookdb.steelbookapi.steelbook.disk.DiskDto;
+import dev.steelbookdb.steelbookapi.steelbook.disk.DiskMapper;
+import dev.steelbookdb.steelbookapi.steelbook.editor.Editor;
+import dev.steelbookdb.steelbookapi.steelbook.editor.EditorDto;
+import dev.steelbookdb.steelbookapi.steelbook.editor.EditorMapper;
+import dev.steelbookdb.steelbookapi.steelbook.retailer.Retailer;
+import dev.steelbookdb.steelbookapi.steelbook.retailer.RetailerDto;
+import dev.steelbookdb.steelbookapi.steelbook.retailer.RetailerMapper;
+import dev.steelbookdb.steelbookapi.steelbook.steelbook.Steelbook;
+import dev.steelbookdb.steelbookapi.steelbook.steelbook.SteelbookDto;
+import dev.steelbookdb.steelbookapi.steelbook.steelbook.SteelbookMapper;
 
 @ExtendWith(MockitoExtension.class)
 class SteelbookMapperTest {

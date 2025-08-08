@@ -10,9 +10,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.steelbookdb.steelbookapi.localization.Language;
-import dev.steelbookdb.steelbookapi.localization.LanguageDto;
-import dev.steelbookdb.steelbookapi.localization.LanguageMapper;
+import dev.steelbookdb.steelbookapi.localization.language.Language;
+import dev.steelbookdb.steelbookapi.localization.language.LanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
+import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormat;
+import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormatDto;
+import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormatMapper;
+import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrack;
+import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackDto;
+import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackMapper;
 
 @ExtendWith(MockitoExtension.class)
 class AudioTrackMapperTest {
