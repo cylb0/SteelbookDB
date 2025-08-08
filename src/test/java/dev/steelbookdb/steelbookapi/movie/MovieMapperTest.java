@@ -78,4 +78,20 @@ class MovieMapperTest {
 
         assertNull(dto);
     }
+
+    @Test
+    void toDto_ReturnsEmptyCollections_GivenNullCollections() {
+        Movie movie = new Movie();
+        movie.setId(1L);
+        movie.setTitle("The null collection movie");
+        movie.setDirector(new Director());
+
+        MovieDto dto = movieMapper.toDto(movie);
+
+        assertNotNull(dto);
+        assertNotNull(dto.genres());
+        assert dto.genres().isEmpty();
+        assertNotNull(dto.translations());
+        assert dto.translations().isEmpty();
+    }
 }

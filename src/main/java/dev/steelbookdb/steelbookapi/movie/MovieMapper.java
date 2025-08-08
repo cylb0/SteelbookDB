@@ -23,14 +23,14 @@ public class MovieMapper {
             movie.getRuntime(),
             movie.getPosterUrl(),
             directorMapper.toDto(movie.getDirector()),
-            movie.getGenres()
+            movie.getGenres() != null ? movie.getGenres()
                 .stream()
                 .map(Genre::getName)
-                .collect(Collectors.toSet()),
-            movie.getMovieTranslations()
+                .collect(Collectors.toSet()) : java.util.Collections.emptySet(),
+            movie.getMovieTranslations() != null ?movie.getMovieTranslations()
                 .stream()
                 .map(movieTranslationMapper::toDto)
-                .toList()
+                .toList() : java.util.Collections.emptyList()
         );
 
     }
