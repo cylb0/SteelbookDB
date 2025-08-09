@@ -8,4 +8,16 @@ public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
         super(message);
     }
+
+    public ResourceNotFoundException(String entity, Long id) {
+        super(String.format("%s not found with ID: %d", capitalizeFirstLetter(entity), id));
+    }
+
+    private static String capitalizeFirstLetter(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+    }
 }
