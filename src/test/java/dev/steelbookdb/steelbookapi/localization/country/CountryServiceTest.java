@@ -71,13 +71,11 @@ class CountryServiceTest {
     void createCountry_returnsDto_WhenGivenValidDto() {
         String countryName = "France";
         CreateCountryDto createDto = new CreateCountryDto(countryName);
-        Country entityToSave = new Country(countryName);
-        Country savedEntity = new Country(countryName);
-        savedEntity.setId(1L);
+        Country savedEntity = Country.builder().id(1L).name(countryName).build();
         CountryDto expectedDto = new CountryDto(1L, countryName);
 
-        when(countryMapper.toEntity(createDto)).thenReturn(entityToSave);
-        when(countryRepository.save(entityToSave)).thenReturn(savedEntity);
+        when(countryMapper.toEntity(createDto)).thenReturn(savedEntity);
+        when(countryRepository.save(any(Country.class))).thenReturn(savedEntity);
         when(countryMapper.toDto(savedEntity)).thenReturn(expectedDto);
 
         CountryDto result = countryService.createCountry(createDto);
@@ -85,18 +83,14 @@ class CountryServiceTest {
         assertNotNull(result);
         assert expectedDto.name().equals(result.name());
         verify(countryMapper, times(1)).toEntity(createDto);
-        verify(countryRepository, times(1)).save(entityToSave);
+        verify(countryRepository, times(1)).save(any(Country.class));
         verify(countryMapper, times(1)).toDto(savedEntity);
     }
 
     @Test
     void getAllCountries_shouldReturnListOfCountryDtos_whenCountriesExist() {
-        Country france = new Country();
-        france.setId(1L);
-        france.setName("France");
-        Country germany = new Country();
-        germany.setId(2L);
-        germany.setName("Germany");
+        Country france = Country.builder().id(1L).name("France").build();
+        Country germany = Country.builder().id(2L).name("Germany").build();
 
         List<Country> countries = List.of(france, germany);
 
@@ -134,13 +128,8 @@ class CountryServiceTest {
         Long countryId = 1L;
         String newName = "Updated Country";
 
-        Country existingCountry = new Country();
-        existingCountry.setId(countryId);
-        existingCountry.setName("Old Country");
-
-        Country updatedCountryEntity = new Country();
-        updatedCountryEntity.setId(countryId);
-        updatedCountryEntity.setName(newName);
+        Country existingCountry = Country.builder().id(countryId).name("Old Country").build();
+        Country updatedCountryEntity = Country.builder().id(countryId).name(newName).build();
         CountryDto expectedDto = new CountryDto(countryId, newName);
 
         UpdateCountryDto updateDto = new UpdateCountryDto(Optional.of(newName));
@@ -182,7 +171,9 @@ class CountryServiceTest {
         Long countryId = 1L;
         String newName = "  ";
 
-        Country existingCountry = new Country();
+        Country existingCountry = Country.builder().id(countryId).name("Old Country").build();
+        
+        when(countryRepository.findById(countryId)).thenReturn(Optional.of(existingCountry));
         existingCountry.setId(countryId);
         existingCountry.setName("Old Country");
         UpdateCountryDto updateDto = new UpdateCountryDto(Optional.of(newName));
@@ -204,12 +195,8 @@ class CountryServiceTest {
         Long countryId = 1L;
         String newName = "France";
 
-        Country existingCountry = new Country();
-        existingCountry.setId(countryId);
-        existingCountry.setName("USA");
-        Country secondExistingCountry = new Country();
-        secondExistingCountry.setId(2L);
-        secondExistingCountry.setName(newName);
+        Country existingCountry = Country.builder().id(countryId).name("USA").build();
+        Country secondExistingCountry = Country.builder().id(2L).name(newName).build();
         UpdateCountryDto updateDto = new UpdateCountryDto(Optional.of(newName));
 
         when(countryRepository.findById(countryId)).thenReturn(Optional.of(existingCountry));

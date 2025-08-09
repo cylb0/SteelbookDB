@@ -20,8 +20,8 @@ public class CountryMapper {
     public Country toEntity(CreateCountryDto dto) {
         if (dto == null) return null;
 
-        return new Country(
-            dto.name()
-        );
+        return Country.builder()
+            .name(dto.name())
+            .build();
     }
 }

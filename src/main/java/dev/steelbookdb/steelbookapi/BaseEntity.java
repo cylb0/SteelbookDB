@@ -8,11 +8,13 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @Data
 @MappedSuperclass
 @NoArgsConstructor
+@SuperBuilder
 public class BaseEntity {
 
     @Id

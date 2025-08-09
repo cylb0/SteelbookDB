@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @Data
@@ -19,14 +20,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "countries")
+@SuperBuilder
 public class Country extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String name;
-
-    public Country(String name) {
-        this.name = name;
-    }
 
     @OneToMany(mappedBy = "country")
     private Set<Editor> editors;
