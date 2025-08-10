@@ -13,10 +13,11 @@ class LanguageMapperTest {
 
     @Test
     void toDto_CorrectlyMaps_GivenLanguageEntity() {
-        Language language = new Language();
-        language.setId(1L);
-        language.setCode("en");
-        language.setName("English");
+        Language language = Language.builder()
+            .id(1L)
+            .code("en")
+            .name("English")
+            .build();
 
         LanguageDto languageDto = languageMapper.toDto(language);
 

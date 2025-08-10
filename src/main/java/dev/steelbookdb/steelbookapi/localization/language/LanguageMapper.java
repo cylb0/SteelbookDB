@@ -20,10 +20,9 @@ public class LanguageMapper {
     public Language toEntity(CreateLanguageDto dto) {
         if (dto == null) return null;
 
-        Language language = new Language();
-        language.setCode(dto.code());
-        language.setName(dto.name());
-
-        return language;
+        return Language.builder()
+            .code(dto.code())
+            .name(dto.name())
+            .build();
     }
 }
