@@ -2,6 +2,8 @@ package dev.steelbookdb.steelbookapi.localization.language;
 
 import org.springframework.stereotype.Service;
 
+import dev.steelbookdb.steelbookapi.localization.language.dto.CreateLanguageDto;
+
 @Service
 public class LanguageMapper {
 
@@ -13,5 +15,14 @@ public class LanguageMapper {
             language.getCode(),
             language.getName()
         );
+    }
+
+    public Language toEntity(CreateLanguageDto dto) {
+        if (dto == null) return null;
+
+        return Language.builder()
+            .code(dto.code())
+            .name(dto.name())
+            .build();
     }
 }

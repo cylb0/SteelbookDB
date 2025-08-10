@@ -15,9 +15,10 @@ class CountryMapperTest {
 
     @Test
     void testTdo_CorrectlyMaps_GivenCountryEntity() {
-        Country country = new Country();
-        country.setId(1L);
-        country.setName("France");
+        Country country = Country.builder()
+            .id(1L)
+            .name("France")
+            .build();
 
         CountryDto countryDto = countryMapper.toDto(country);
 
