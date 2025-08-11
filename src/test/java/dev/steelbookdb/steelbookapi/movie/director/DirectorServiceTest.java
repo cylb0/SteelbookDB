@@ -108,4 +108,34 @@ class DirectorServiceTest {
         verify(directorRepository, times(1)).findAll();
         verifyNoInteractions(directorMapper);
     }
+
+    @Test
+    void getDirectorById_returnsDirectorDto_whenDirectorExists() {
+        Long directorId = 1L;
+        Country country = Country.builder().id(1L).name("USA").build();
+        Director director = Director.builder().id(directorId).name("John Doe").country(country).build();
+        DirectorDto expectedDto = new DirectorDto(directorId, "John Doe", new CountryDto(1L, "USA"));
+
+        when(directorRepository.findById(directorId)).thenReturn(Optional.of(director));
+        when(directorMapper.toDto(director)).thenReturn(expectedDto);
+
+        DirectorDto result = directorService.getDirectorById(directorId);
+
+        assertNotNull(result);
+        assertEquals(expectedDto, result);
+        verify(directorRepository, times(1)).findById(directorId);
+        verify(directorMapper, times(1)).toDto(director);
+    }
+
+    @Test
+    void getDirectorById_throwsResourceNotFoundException_whenDirectorDoesNotExist() {
+        Long directorId = 1L;
+
+        when(directorRepository.findById(directorId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> directorService.getDirectorById(directorId));
+        verify(directorRepository, times(1)).findById(directorId);
+        verifyNoInteractions(directorMapper);
+    }
+
 }

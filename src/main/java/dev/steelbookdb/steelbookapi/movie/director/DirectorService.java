@@ -37,4 +37,10 @@ public class DirectorService {
             .toList();
     }
 
+    public DirectorDto getDirectorById(Long id) {
+        Director director = directorRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException(Director.class.getSimpleName(), id));
+        return directorMapper.toDto(director);
+    }
+
 }
