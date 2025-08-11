@@ -83,4 +83,11 @@ public class LanguageService {
 
         return languageMapper.toDto(existingLanguage);
     }
+
+    public void deleteLanguage(Long id) {
+        if (!languageRepository.existsById(id)) {
+            throw new ResourceNotFoundException("language", id);
+        }
+        languageRepository.deleteById(id);
+    }
 }

@@ -324,4 +324,30 @@ class LanguageServiceTest {
         verify(languageRepository, times(1)).findById(languageId);
         verify(languageRepository, never()).save(any(Language.class));
     }
+
+    @Test
+    void deleteLanguage_removesLanguage_whenLanguageExists() {
+        Long languageId = 1L;
+
+        when(languageRepository.existsById(languageId)).thenReturn(true);
+
+        languageService.deleteLanguage(languageId);
+        
+        verify(languageRepository, times(1)).existsById(languageId);
+        verify(languageRepository, times(1)).deleteById(languageId);
+    }
+
+     @Test
+     void deleteLanguage_throwsResourceNotFoundException_whenLanguageDoesNotExist() {
+        Long languageId = 1L;
+
+        when(languageRepository.existsById(languageId)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            languageService.deleteLanguage(languageId);
+        });
+
+        verify(languageRepository, times(1)).existsById(languageId);
+        verify(languageRepository, never()).deleteById(languageId);
+    }
 }
