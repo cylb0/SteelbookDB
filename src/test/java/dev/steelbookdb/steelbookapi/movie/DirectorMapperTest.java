@@ -11,8 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.localization.country.CountryMapper;
 import dev.steelbookdb.steelbookapi.movie.director.Director;
-import dev.steelbookdb.steelbookapi.movie.director.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
+import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
 
 @ExtendWith(MockitoExtension.class)
 class DirectorMapperTest {

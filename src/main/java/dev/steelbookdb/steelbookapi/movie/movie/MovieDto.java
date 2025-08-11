@@ -3,7 +3,7 @@ package dev.steelbookdb.steelbookapi.movie.movie;
 import java.util.List;
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.movie.director.DirectorDto;
+import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationDto;
 
 public record MovieDto(

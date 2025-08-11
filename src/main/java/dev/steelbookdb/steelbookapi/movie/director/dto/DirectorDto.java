@@ -1,4 +1,4 @@
-package dev.steelbookdb.steelbookapi.movie.director;
+package dev.steelbookdb.steelbookapi.movie.director.dto;
 
 import dev.steelbookdb.steelbookapi.localization.country.dto.CountryDto;
 

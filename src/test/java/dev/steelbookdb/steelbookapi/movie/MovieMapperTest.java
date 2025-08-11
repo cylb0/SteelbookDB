@@ -13,8 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.movie.director.Director;
-import dev.steelbookdb.steelbookapi.movie.director.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
+import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.genre.Genre;
 import dev.steelbookdb.steelbookapi.movie.movie.Movie;
 import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
