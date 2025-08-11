@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +31,13 @@ public class GenreController {
     @GetMapping("/genres")
     public List<GenreDto> getAllGenres() {
         return genreService.getAllGenres();
+    }
+
+    @GetMapping("/genres/{id}")
+    public GenreDto getGenreById(
+        @PathVariable Long id
+    ) {
+        return genreService.getGenreById(id);
     }
     
 }

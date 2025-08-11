@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
+import dev.steelbookdb.steelbookapi.exception.ResourceNotFoundException;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.CreateGenreDto;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.GenreDto;
 
@@ -111,6 +113,37 @@ class GenreServiceTest {
         assertEquals(0, result.size());
 
         verify(genreRepository, times(1)).findAll();
+        verifyNoInteractions(genreMapper);
+    }
+
+    @Test
+    void getGenreById_returnsGenreDto_whenGenreExists() {
+        Long genreId = 1L;
+        GenreDto expectedDto = new GenreDto(genreId, "Action");
+
+        when(genreRepository.findById(genreId)).thenReturn(Optional.of(new Genre()));
+        when(genreMapper.toDto(any(Genre.class))).thenReturn(expectedDto);
+
+        GenreDto result = genreService.getGenreById(genreId);
+
+        assertNotNull(result);
+        assertEquals(expectedDto, result);
+
+        verify(genreRepository, times(1)).findById(genreId);
+        verify(genreMapper, times(1)).toDto(any(Genre.class));
+    }
+
+    @Test
+    void getGenreById_throwsResourceNotFoundException_whenGenreDoesNotExist() {
+        Long genreId = 1L;
+
+        when(genreRepository.findById(genreId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            genreService.getGenreById(genreId);
+        });
+
+        verify(genreRepository, times(1)).findById(genreId);
         verifyNoInteractions(genreMapper);
     }
 }

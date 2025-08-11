@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
+import dev.steelbookdb.steelbookapi.exception.ResourceNotFoundException;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.CreateGenreDto;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.GenreDto;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,11 @@ public class GenreService {
             .stream()
             .map(genreMapper::toDto)
             .toList();
+    }
+
+    public GenreDto getGenreById(Long id) {
+        return genreRepository.findById(id)
+            .map(genreMapper::toDto)
+            .orElseThrow(() -> new ResourceNotFoundException("Genre", id));
     }
 }
