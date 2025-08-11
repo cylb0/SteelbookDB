@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -22,10 +23,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.steelbookdb.steelbookapi.exception.ConflictException;
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
 import dev.steelbookdb.steelbookapi.exception.ResourceNotFoundException;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.CreateGenreDto;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.GenreDto;
+import dev.steelbookdb.steelbookapi.movie.genre.dto.UpdateGenreDto;
 
 @ExtendWith(MockitoExtension.class)
 class GenreServiceTest {
@@ -145,5 +148,127 @@ class GenreServiceTest {
 
         verify(genreRepository, times(1)).findById(genreId);
         verifyNoInteractions(genreMapper);
+    }
+
+    @Test
+    void updateGenre_updatesName_whenNameIsProvided() {
+        Long genreId = 1L;
+        String newName = "Adventure";
+        Genre existingGenre = Genre.builder().id(genreId).name("Action").build();
+        UpdateGenreDto updateDto = new UpdateGenreDto(Optional.of(newName));
+        GenreDto expectedDto = new GenreDto(existingGenre.getId(), newName);
+
+        when(genreRepository.findById(genreId)).thenReturn(Optional.of(existingGenre));
+        when(genreRepository.existsByName(newName)).thenReturn(false);
+        when(genreRepository.save(existingGenre)).thenReturn(Genre.builder()
+            .id(existingGenre.getId())
+            .name(newName)
+            .build());
+        when(genreMapper.toDto(any(Genre.class))).thenReturn(expectedDto);
+
+        GenreDto result = genreService.updateGenre(genreId, updateDto);
+
+        assertNotNull(result);
+        assertEquals(expectedDto, result);
+        
+        verify(genreRepository, times(1)).findById(genreId);
+        verify(genreRepository, times(1)).existsByName(newName);
+        verify(genreRepository, times(1)).save(existingGenre);
+        verify(genreMapper, times(1)).toDto(existingGenre);
+    }
+
+    @Test
+    void updateGenre_throwsResourceNotFoundException_whenGenreDoesNotExist() {
+        Long genreId = 1L;
+        UpdateGenreDto updateDto = new UpdateGenreDto(Optional.of("New Name"));
+
+        when(genreRepository.findById(genreId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            genreService.updateGenre(genreId, updateDto);
+        });
+
+        verify(genreRepository, times(1)).findById(genreId);
+        verifyNoInteractions(genreMapper);
+    }
+
+    @Test
+    void updateGenre_shouldNotUpdateAnything_whenDtoIsEmpty() {
+        Long genreId = 1L;
+        Genre existingGenre = Genre.builder().id(genreId).name("Action").build();
+        UpdateGenreDto updateDto = new UpdateGenreDto(Optional.empty());
+
+        when(genreRepository.findById(genreId)).thenReturn(Optional.of(existingGenre));
+        when(genreMapper.toDto(existingGenre)).thenReturn(new GenreDto(existingGenre.getId(), existingGenre.getName()));
+
+        GenreDto result = genreService.updateGenre(genreId, updateDto);
+
+        assertNotNull(result);
+        assertEquals(new GenreDto(existingGenre.getId(), existingGenre.getName()), result);
+        verify(genreRepository, times(1)).findById(genreId);
+        verify(genreRepository, never()).save(any(Genre.class));
+        verifyNoInteractions(genreRepository.existsByName(any()));
+    }
+
+    @Test
+    void updateGenre_throwsDuplicateEntryException_whenGenreNameAlreadyExists() {
+        Long genreId = 1L;
+        String newName = "Adventure";
+        Genre existingGenre = Genre.builder().id(genreId).name("Action").build();
+        UpdateGenreDto updateDto = new UpdateGenreDto(Optional.of(newName));
+
+        when(genreRepository.findById(genreId)).thenReturn(Optional.of(existingGenre));
+        when(genreRepository.existsByName(newName)).thenReturn(true);
+
+        assertThrows(DuplicateEntryException.class, () -> {
+            genreService.updateGenre(genreId, updateDto);
+        });
+
+        verify(genreRepository, times(1)).findById(genreId);
+        verify(genreRepository, times(1)).existsByName(newName);
+        verifyNoInteractions(genreMapper);
+        verify(genreRepository, never()).save(any(Genre.class));
+    }
+
+    @Test
+    void updateGenre_throwsConflictException_whenNameIsBlank() {
+        Long genreId = 1L;
+        UpdateGenreDto updateDto = new UpdateGenreDto(Optional.of(""));
+
+        when(genreRepository.findById(genreId)).thenReturn(Optional.of(Genre.builder().id(genreId).name("Action").build()));
+
+        assertThrows(ConflictException.class, () -> {
+            genreService.updateGenre(genreId, updateDto);
+        });
+
+        verify(genreRepository, times(1)).findById(genreId);
+        verifyNoInteractions(genreMapper);
+        verify(genreRepository, never()).save(any(Genre.class));
+    }
+
+    @Test
+    void deleteGenre_removesGenre_whenExists() {
+        Long genreId = 1L;
+
+        when(genreRepository.existsById(genreId)).thenReturn(true);
+
+        genreService.deleteGenre(genreId);
+
+        verify(genreRepository, times(1)).existsById(genreId);
+        verify(genreRepository, times(1)).deleteById(genreId);
+    }
+
+    @Test
+    void deleteGenre_throwsResourceNotFoundException_whenGenreDoesNotExist() {
+        Long genreId = 1L;
+
+        when(genreRepository.existsById(genreId)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () ->  {
+            genreService.deleteGenre(genreId);
+        });
+
+        verify(genreRepository, times(1)).existsById(genreId);
+        verify(genreRepository, never()).deleteById(anyLong());
     }
 }
