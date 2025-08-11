@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,4 +24,10 @@ public class DirectorController {
     public DirectorDto createDirector(@Valid @RequestBody CreateDirectorDto dto) {
         return directorService.createDirector(dto);
     }
+
+    @GetMapping("/directors")
+    public List<DirectorDto> getAllDirectors() {
+        return directorService.getAllDirectors();
+    }
+    
 }

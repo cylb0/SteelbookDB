@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -77,5 +78,34 @@ class DirectorServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> directorService.createDirector(createDirectorDto));
         verify(countryRepository, times(1)).findById(createDirectorDto.countryId());
         verifyNoInteractions(directorMapper, directorRepository);
+    }
+
+    @Test
+    void getAllDirectors_returnsList_whenDirectorsExist() {
+        Director director = Director.builder().id(1L).name("John Doe").country(Country.builder().id(1L).name("USA").build()).build();
+        DirectorDto directorDto = new DirectorDto(1L, "John Doe", new CountryDto(1L, "USA"));
+
+        when(directorRepository.findAll()).thenReturn(List.of(director));
+        when(directorMapper.toDto(director)).thenReturn(directorDto);
+
+        List<DirectorDto> result = directorService.getAllDirectors();
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(directorDto, result.get(0));
+        verify(directorRepository, times(1)).findAll();
+        verify(directorMapper, times(1)).toDto(director);
+    }
+
+    @Test
+    void getAllDirectors_returnsEmptyList_whenNoDirectorsExist() {
+        when(directorRepository.findAll()).thenReturn(List.of());
+
+        List<DirectorDto> result = directorService.getAllDirectors();
+
+        assertNotNull(result);
+        assertEquals(0, result.size());
+        verify(directorRepository, times(1)).findAll();
+        verifyNoInteractions(directorMapper);
     }
 }

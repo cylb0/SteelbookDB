@@ -1,5 +1,7 @@
 package dev.steelbookdb.steelbookapi.movie.director;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import dev.steelbookdb.steelbookapi.exception.ResourceNotFoundException;
@@ -26,6 +28,13 @@ public class DirectorService {
         Director director = directorMapper.toEntity(dto, country);
         Director savedDirector = directorRepository.save(director);
         return directorMapper.toDto(savedDirector);
+    }
+
+    public List<DirectorDto> getAllDirectors() {
+        return directorRepository.findAll()
+            .stream()
+            .map(directorMapper::toDto)
+            .toList();
     }
 
 }
