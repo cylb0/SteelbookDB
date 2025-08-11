@@ -1,6 +1,7 @@
 package dev.steelbookdb.steelbookapi.movie.genre;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,6 +11,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -76,4 +79,38 @@ class GenreServiceTest {
         verify(genreRepository, never()).save(any(Genre.class));
     }
     
+    @Test
+    void getAllGenres_returnsGenreDtoList_whenGenresExist() {
+        Genre genre = Genre.builder()
+            .id(1L)
+            .name("Action")
+            .build();
+
+        List<Genre> genres = List.of(genre);
+        GenreDto genreDto = new GenreDto(genre.getId(), genre.getName());
+
+        when(genreRepository.findAll()).thenReturn(genres);
+        when(genreMapper.toDto(any(Genre.class))).thenReturn(genreDto);
+
+        List<GenreDto> result = genreService.getAllGenres();
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+
+        verify(genreRepository, times(1)).findAll();
+        verify(genreMapper, times(1)).toDto(genre);
+    }
+
+    @Test
+    void getAllGenres_returnsEmptyList_whenNoGenresExist() {
+        when(genreRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<GenreDto> result = genreService.getAllGenres();
+
+        assertNotNull(result);
+        assertEquals(0, result.size());
+
+        verify(genreRepository, times(1)).findAll();
+        verifyNoInteractions(genreMapper);
+    }
 }

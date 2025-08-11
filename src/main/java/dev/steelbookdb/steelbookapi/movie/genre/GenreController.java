@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +25,11 @@ public class GenreController {
         @Valid @RequestBody CreateGenreDto dto
     ) {
         return genreService.createGenre(dto);
+    }
+
+    @GetMapping("/genres")
+    public List<GenreDto> getAllGenres() {
+        return genreService.getAllGenres();
     }
     
 }

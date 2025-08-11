@@ -1,5 +1,7 @@
 package dev.steelbookdb.steelbookapi.movie.genre;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
@@ -24,5 +26,12 @@ public class GenreService {
         Genre genre = genreMapper.toEntity(dto);
         Genre savedGenre = genreRepository.save(genre);
         return genreMapper.toDto(savedGenre);
+    }
+
+    public List<GenreDto> getAllGenres() {
+        return genreRepository.findAll()
+            .stream()
+            .map(genreMapper::toDto)
+            .toList();
     }
 }
