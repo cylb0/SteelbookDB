@@ -7,23 +7,39 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import dev.steelbookdb.steelbookapi.exception.ConflictException;
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
+import dev.steelbookdb.steelbookapi.exception.ErrorResponse;
 import dev.steelbookdb.steelbookapi.exception.ResourceNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            HttpStatus.NOT_FOUND.getReasonPhrase(),
+            ex.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<String> handleConflictException(ConflictException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    public ResponseEntity<ErrorResponse> handleConflictException(ConflictException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+            HttpStatus.CONFLICT.value(),
+            HttpStatus.CONFLICT.getReasonPhrase(),
+            ex.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(DuplicateEntryException.class)
-    public ResponseEntity<String> handleDuplicateEntryException(DuplicateEntryException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    public ResponseEntity<ErrorResponse> handleDuplicateEntryException(DuplicateEntryException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+            HttpStatus.CONFLICT.value(),
+            HttpStatus.CONFLICT.getReasonPhrase(),
+            ex.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 }
