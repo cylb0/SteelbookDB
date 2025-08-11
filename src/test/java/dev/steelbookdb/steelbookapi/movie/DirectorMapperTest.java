@@ -4,14 +4,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.steelbookdb.steelbookapi.localization.country.CountryMapper;
 import dev.steelbookdb.steelbookapi.movie.director.Director;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
 
+@ExtendWith(MockitoExtension.class)
 class DirectorMapperTest {
 
-    private final DirectorMapper directorMapper = new DirectorMapper();
+    @Mock
+    private CountryMapper countryMapper;
+
+    @InjectMocks
+    private DirectorMapper directorMapper;
     
     @Test
     void toTdo_MapCorrectly_GivenValidDirectorEntity() {

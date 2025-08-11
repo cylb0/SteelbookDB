@@ -59,7 +59,7 @@ class MovieMapperTest {
         movie.setMovieTranslations(Set.of(translation));
 
         when(directorMapper.toDto(director))
-            .thenReturn(new DirectorDto(director.getId(), director.getName()));
+            .thenReturn(new DirectorDto(director.getId(), director.getName(), null));
         when(movieTranslationMapper.toDto(translation))
             .thenReturn(new MovieTranslationDto(translation.getId(), "fr", translation.getTitle(), translation.getSummary()));
         
