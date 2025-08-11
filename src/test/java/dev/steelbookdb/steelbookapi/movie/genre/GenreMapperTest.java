@@ -1,12 +1,10 @@
-package dev.steelbookdb.steelbookapi.movie;
+package dev.steelbookdb.steelbookapi.movie.genre;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-import dev.steelbookdb.steelbookapi.movie.genre.Genre;
-import dev.steelbookdb.steelbookapi.movie.genre.GenreMapper;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.CreateGenreDto;
 import dev.steelbookdb.steelbookapi.movie.genre.dto.GenreDto;
 
