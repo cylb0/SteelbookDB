@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
 import dev.steelbookdb.steelbookapi.localization.language.dto.CreateLanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 
 class LanguageMapperTest {
 

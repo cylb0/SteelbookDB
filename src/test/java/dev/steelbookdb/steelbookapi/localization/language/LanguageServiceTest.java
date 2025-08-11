@@ -24,6 +24,7 @@ import dev.steelbookdb.steelbookapi.exception.ConflictException;
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
 import dev.steelbookdb.steelbookapi.exception.ResourceNotFoundException;
 import dev.steelbookdb.steelbookapi.localization.language.dto.CreateLanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.localization.language.dto.UpdateLanguageDto;
 
 @ExtendWith(MockitoExtension.class)

@@ -3,6 +3,7 @@ package dev.steelbookdb.steelbookapi.localization.language;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.steelbookdb.steelbookapi.localization.language.dto.CreateLanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.localization.language.dto.UpdateLanguageDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

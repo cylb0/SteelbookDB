@@ -11,8 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.localization.language.Language;
-import dev.steelbookdb.steelbookapi.localization.language.LanguageDto;
 import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslation;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationMapper;

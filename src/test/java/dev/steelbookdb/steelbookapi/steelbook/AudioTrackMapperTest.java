@@ -11,8 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.localization.language.Language;
-import dev.steelbookdb.steelbookapi.localization.language.LanguageDto;
 import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormat;
 import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormatDto;
 import dev.steelbookdb.steelbookapi.steelbook.audioformat.AudioFormatMapper;
