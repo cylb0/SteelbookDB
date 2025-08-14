@@ -5,6 +5,7 @@ import java.util.Set;
 import dev.steelbookdb.steelbookapi.BaseEntity;
 import dev.steelbookdb.steelbookapi.localization.country.Country;
 import dev.steelbookdb.steelbookapi.movie.movie.Movie;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,12 +26,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Director extends BaseEntity {
 
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "director")
     private Set<Movie> movies;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "country_id")
     private Country country;
 }
