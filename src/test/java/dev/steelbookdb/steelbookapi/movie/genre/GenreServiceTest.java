@@ -206,7 +206,7 @@ class GenreServiceTest {
         assertEquals(new GenreDto(existingGenre.getId(), existingGenre.getName()), result);
         verify(genreRepository, times(1)).findById(genreId);
         verify(genreRepository, never()).save(any(Genre.class));
-        verifyNoInteractions(genreRepository.existsByName(any()));
+        verify(genreRepository, never()).existsByName(any());
     }
 
     @Test
