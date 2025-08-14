@@ -3,6 +3,7 @@ package dev.steelbookdb.steelbookapi.localization.country;
 import java.util.Set;
 
 import dev.steelbookdb.steelbookapi.BaseEntity;
+import dev.steelbookdb.steelbookapi.movie.director.Director;
 import dev.steelbookdb.steelbookapi.steelbook.editor.Editor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,4 +29,7 @@ public class Country extends BaseEntity {
 
     @OneToMany(mappedBy = "country")
     private Set<Editor> editors;
+
+    @OneToMany(mappedBy = "country")
+    private Set<Director> directors;
 }

@@ -1,4 +1,4 @@
-package dev.steelbookdb.steelbookapi.movie.genre;
+package dev.steelbookdb.steelbookapi.movie.genre.dto;
 
 public record GenreDto(
     Long id,

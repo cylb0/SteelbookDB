@@ -13,8 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.movie.director.Director;
-import dev.steelbookdb.steelbookapi.movie.director.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
+import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.genre.Genre;
 import dev.steelbookdb.steelbookapi.movie.movie.Movie;
 import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
@@ -59,7 +59,7 @@ class MovieMapperTest {
         movie.setMovieTranslations(Set.of(translation));
 
         when(directorMapper.toDto(director))
-            .thenReturn(new DirectorDto(director.getId(), director.getName()));
+            .thenReturn(new DirectorDto(director.getId(), director.getName(), null));
         when(movieTranslationMapper.toDto(translation))
             .thenReturn(new MovieTranslationDto(translation.getId(), "fr", translation.getTitle(), translation.getSummary()));
         

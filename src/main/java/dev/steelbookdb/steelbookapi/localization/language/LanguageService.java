@@ -9,6 +9,7 @@ import dev.steelbookdb.steelbookapi.exception.ConflictException;
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
 import dev.steelbookdb.steelbookapi.exception.ResourceNotFoundException;
 import dev.steelbookdb.steelbookapi.localization.language.dto.CreateLanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.localization.language.dto.UpdateLanguageDto;
 import lombok.RequiredArgsConstructor;
 
@@ -82,5 +83,12 @@ public class LanguageService {
         }
 
         return languageMapper.toDto(existingLanguage);
+    }
+
+    public void deleteLanguage(Long id) {
+        if (!languageRepository.existsById(id)) {
+            throw new ResourceNotFoundException("language", id);
+        }
+        languageRepository.deleteById(id);
     }
 }

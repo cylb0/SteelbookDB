@@ -1,13 +1,12 @@
-package dev.steelbookdb.steelbookapi.movie;
+package dev.steelbookdb.steelbookapi.movie.genre;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-import dev.steelbookdb.steelbookapi.movie.genre.Genre;
-import dev.steelbookdb.steelbookapi.movie.genre.GenreDto;
-import dev.steelbookdb.steelbookapi.movie.genre.GenreMapper;
+import dev.steelbookdb.steelbookapi.movie.genre.dto.CreateGenreDto;
+import dev.steelbookdb.steelbookapi.movie.genre.dto.GenreDto;
 
 class GenreMapperTest {
 
@@ -30,5 +29,21 @@ class GenreMapperTest {
     void toDto_ReturnsNull_WhenGenreIsNull() {
         GenreDto genreDto = genreMapper.toDto(null);
         assertNull(genreDto);
+    }
+
+    @Test
+    void toEntity_CorrectlyMaps_GivenCreateGenreDto() {
+        CreateGenreDto createGenreDto = new CreateGenreDto("Comedy");
+
+        Genre genre = genreMapper.toEntity(createGenreDto);
+
+        assertNotNull(genre);
+        assert genre.getName().equals(createGenreDto.name());
+    }
+
+    @Test
+    void toEntity_ReturnsNull_WhenCreateGenreDtoIsNull() {
+        Genre genre = genreMapper.toEntity(null);
+        assertNull(genre);
     }
 }

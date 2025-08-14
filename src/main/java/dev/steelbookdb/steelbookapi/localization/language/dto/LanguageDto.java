@@ -1,4 +1,4 @@
-package dev.steelbookdb.steelbookapi.localization.language;
+package dev.steelbookdb.steelbookapi.localization.language.dto;
 
 public record LanguageDto(
     Long id,

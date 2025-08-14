@@ -2,7 +2,7 @@ package dev.steelbookdb.steelbookapi.steelbook.disk;
 
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.localization.language.LanguageDto;
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackDto;
 
