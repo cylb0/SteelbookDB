@@ -21,6 +21,7 @@ import dev.steelbookdb.steelbookapi.movie.director.Director;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
 import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.genre.Genre;
+import dev.steelbookdb.steelbookapi.movie.movie.dto.CreateMovieDto;
 import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslation;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationDto;
@@ -133,5 +134,41 @@ class MovieMapperTest {
         assert dto.genres().isEmpty();
         assertNotNull(dto.translations());
         assert dto.translations().isEmpty();
+    }
+
+    @Test
+    void toEntity_CorrectlyMaps_GivenCreateMovieDto() {
+        CreateMovieDto dto = new CreateMovieDto(
+            "The movie",
+            2025,
+            120,
+            "https://example.com/poster.jpg",
+            1L,
+            1L,
+            Set.of(1L, 2L)
+        );
+
+        Director director = Director.builder()
+            .id(1L)
+            .name("John Doe")
+            .build();
+
+        Language originalLanguage = Language.builder()
+            .id(1L)
+            .name("French")
+            .build();
+
+        Set<Genre> genres = Set.of(Genre.builder().id(1L).name("Action").build());
+
+        Movie movie = movieMapper.toEntity(dto, director, genres, originalLanguage);
+
+        assertNotNull(movie);
+        assertEquals(dto.title(), movie.getTitle());
+        assertEquals(dto.releaseYear(), movie.getReleaseYear());
+        assertEquals(dto.runtime(), movie.getRuntime());
+        assertEquals(dto.posterUrl(), movie.getPosterUrl());
+        assertEquals(director, movie.getDirector());
+        assertEquals(originalLanguage, movie.getOriginalLanguage());
+        assertEquals(genres, movie.getGenres());
     }
 }
