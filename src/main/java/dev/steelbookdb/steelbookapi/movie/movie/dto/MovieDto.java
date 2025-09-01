@@ -1,8 +1,9 @@
-package dev.steelbookdb.steelbookapi.movie.movie;
+package dev.steelbookdb.steelbookapi.movie.movie.dto;
 
 import java.util.List;
 import java.util.Set;
 
+import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationDto;
 
@@ -13,6 +14,7 @@ public record MovieDto(
     int runtime,
     String posterUrl,
     DirectorDto director,
+    LanguageDto originalLanguage,
     Set<String> genres,
     List<MovieTranslationDto> translations
 ) {

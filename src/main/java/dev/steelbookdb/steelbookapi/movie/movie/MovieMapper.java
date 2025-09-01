@@ -4,8 +4,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
 import dev.steelbookdb.steelbookapi.movie.genre.Genre;
+import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class MovieMapper {
 
     private final DirectorMapper directorMapper;
+    private final LanguageMapper languageMapper;
     private final MovieTranslationMapper movieTranslationMapper;
 
     public MovieDto toDto(Movie movie) {
@@ -26,6 +29,7 @@ public class MovieMapper {
             movie.getRuntime(),
             movie.getPosterUrl(),
             directorMapper.toDto(movie.getDirector()),
+            languageMapper.toDto(movie.getOriginalLanguage()),
             movie.getGenres() != null ? movie.getGenres()
                 .stream()
                 .map(Genre::getName)
