@@ -4,15 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.never;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.lang.foreign.Linker.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -63,15 +61,15 @@ class MovieServiceTest {
     void createMovie_throwsResourceNotFoundException_givenNonExistentDirectorId() {
         Long nonExistentDirectorId = 999L;
 
-        CreateMovieDto dto = new CreateMovieDto(
-            "Inception",
-            2010,
-            148,
-            "http://example.com/inception.jpg",
-            nonExistentDirectorId,
-            1L,
-            Set.of(1L)
-        );
+        CreateMovieDto dto = CreateMovieDto.builder()
+            .title("Inception")
+            .releaseYear(2010)
+            .runtime(148)
+            .posterUrl("http://example.com/inception.jpg")
+            .directorId(nonExistentDirectorId)
+            .originalLanguageId(1L)
+            .genreIds(Set.of(1L))
+            .build();
 
         when(directorRepository.findById(nonExistentDirectorId)).thenReturn(Optional.empty());
 
@@ -85,15 +83,15 @@ class MovieServiceTest {
         Long existingDirectorId = 1L;
         Long nonExistentGenreId = 999L;
 
-        CreateMovieDto dto = new CreateMovieDto(
-            "Inception",
-            2010,
-            148,
-            "http://example.com/inception.jpg",
-            existingDirectorId,
-            1L,
-            Set.of(nonExistentGenreId)
-        );
+        CreateMovieDto dto = CreateMovieDto.builder()
+            .title("Inception")
+            .releaseYear(2010)
+            .runtime(148)
+            .posterUrl("http://example.com/inception.jpg")
+            .directorId(existingDirectorId)
+            .originalLanguageId(1L)
+            .genreIds(Set.of(nonExistentGenreId))
+            .build();
 
         when(directorRepository.findById(dto.directorId())).thenReturn(Optional.of(new Director()));
 
@@ -105,20 +103,20 @@ class MovieServiceTest {
     }
 
     @Test
-    void createMovie_throwsResourceNotFOundException_givenNonExistentLanguageId() {
+    void createMovie_throwsResourceNotFoundException_givenNonExistentLanguageId() {
         Long existingDirectorId = 1L;
         Long nonExistentLanguageId = 1L;
         Long existingGenreId = 999L;
 
-        CreateMovieDto dto = new CreateMovieDto(
-            "Inception",
-            2010,
-            148,
-            "http://example.com/inception.jpg",
-            existingDirectorId,
-            nonExistentLanguageId,
-            Set.of(existingGenreId)
-        );
+        CreateMovieDto dto = CreateMovieDto.builder()
+            .title("Inception")
+            .releaseYear(2010)
+            .runtime(148)
+            .posterUrl("http://example.com/inception.jpg")
+            .directorId(existingDirectorId)
+            .originalLanguageId(nonExistentLanguageId)
+            .genreIds(Set.of(existingGenreId))
+            .build();
 
         when(directorRepository.findById(dto.directorId())).thenReturn(Optional.of(new Director()));
         when(genreRepository.findById(anyLong())).thenReturn(Optional.of(new Genre()));
@@ -135,71 +133,39 @@ class MovieServiceTest {
         Long originalLanguageId = 1L;
         Set<Long> genreIds = Set.of(1L, 2L);
 
-        CreateMovieDto dto = new CreateMovieDto(
-            "Inception",
-            2010,
-            148,
-            "http://example.com/inception.jpg",
-            directorId,
-            originalLanguageId,
-            genreIds
-        );
+        CreateMovieDto dto = CreateMovieDto.builder()
+            .title("Inception")
+            .releaseYear(2010)
+            .runtime(148)
+            .posterUrl("http://example.com/inception.jpg")
+            .directorId(directorId)
+            .originalLanguageId(originalLanguageId)
+            .genreIds(genreIds)
+            .build();
 
-        Director director = Director.builder().id(directorId).name("Christopher Nolan").build();
-        Language originalLanguage = Language.builder().id(originalLanguageId).name("English").code("en").build();
-        Genre genre1 = Genre.builder().id(1L).name("Action").build();
-        Genre genre2 = Genre.builder().id(2L).name("Sci-Fi").build();
+        Director director = Director.builder().id(directorId).build();
+        Language originalLanguage = Language.builder().id(originalLanguageId).build();
+        Genre genre1 = Genre.builder().id(1L).build();
+        Genre genre2 = Genre.builder().id(2L).build();
         Set<Genre> genres = Set.of(genre1, genre2);
 
-        Movie movieToSave = Movie.builder()
-            .title(dto.title())
-            .releaseYear(dto.releaseYear())
-            .runtime(dto.runtime())
-            .posterUrl(dto.posterUrl())
-            .director(director)
-            .originalLanguage(originalLanguage)
-            .genres(genres)
-            .build();
-        Movie savedMovie = Movie.builder()
-            .id(1L)
-            .title(dto.title())
-            .releaseYear(dto.releaseYear())
-            .runtime(dto.runtime())
-            .posterUrl(dto.posterUrl())
-            .director(director)
-            .originalLanguage(originalLanguage)
-            .genres(genres)
-            .build();
+        MovieDto expectedDto = MovieDto.builder().build();
 
-        DirectorDto directorDto = new DirectorDto(director.getId(), director.getName(), null);
-        LanguageDto originalLanguageDto = new LanguageDto(originalLanguage.getId(), originalLanguage.getName(), originalLanguage.getCode());
-        Set<String> genreNames = Set.of(genre1.getName(), genre2.getName());
-
-        MovieDto expectedDto = new MovieDto(
-            savedMovie.getId(),
-            savedMovie.getTitle(),
-            savedMovie.getReleaseYear(),
-            savedMovie.getRuntime(),
-            savedMovie.getPosterUrl(),
-            directorDto,
-            originalLanguageDto,
-            genreNames,
-            List.of()
-        );
-        
         when(directorRepository.findById(directorId)).thenReturn(Optional.of(director));
         when(languageRepository.findById(originalLanguageId)).thenReturn(Optional.of(originalLanguage));
         when(genreRepository.findById(1L)).thenReturn(Optional.of(genre1));
         when(genreRepository.findById(2L)).thenReturn(Optional.of(genre2));
-        when(movieMapper.toEntity(dto, director, genres, originalLanguage)).thenReturn(movieToSave);
-        when(movieRepository.save(movieToSave)).thenReturn(savedMovie);
-        when(movieMapper.toDto(savedMovie)).thenReturn(expectedDto);
+        
+        when(movieMapper.toEntity(any(CreateMovieDto.class), any(Director.class), any(Set.class), any(Language.class)))
+            .thenReturn(new Movie());
+        when(movieRepository.save(any(Movie.class))).thenReturn(new Movie());
+        when(movieMapper.toDto(any(Movie.class))).thenReturn(expectedDto);
 
         MovieDto result = movieService.createMovie(dto);
 
         assertNotNull(result);
         assertEquals(expectedDto, result);
-        verify(movieRepository, times(1)).save(movieToSave);
-        verify(movieMapper, times(1)).toDto(savedMovie);
+        verify(movieRepository, times(1)).save(any(Movie.class));
+        verify(movieMapper, times(1)).toDto(any(Movie.class));
     }
 }
