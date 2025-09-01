@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,8 @@ import dev.steelbookdb.steelbookapi.localization.language.Language;
 import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
 import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.movie.movie.Movie;
-import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
 import dev.steelbookdb.steelbookapi.movie.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrack;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackDto;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackMapper;

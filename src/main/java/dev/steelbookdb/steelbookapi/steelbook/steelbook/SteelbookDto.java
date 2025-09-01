@@ -3,7 +3,7 @@ package dev.steelbookdb.steelbookapi.steelbook.steelbook;
 import java.time.LocalDate;
 import java.util.Set;
 
-import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
+import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.steelbook.disk.DiskDto;
 import dev.steelbookdb.steelbookapi.steelbook.editor.EditorDto;
 import dev.steelbookdb.steelbookapi.steelbook.retailer.RetailerDto;
