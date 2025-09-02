@@ -2,7 +2,6 @@ package dev.steelbookdb.steelbookapi.handler;
 
 import java.util.stream.Collectors;
 
-import org.apache.coyote.BadRequestException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import dev.steelbookdb.steelbookapi.exception.BadRequestException;
 import dev.steelbookdb.steelbookapi.exception.ConflictException;
 import dev.steelbookdb.steelbookapi.exception.DuplicateEntryException;
 import dev.steelbookdb.steelbookapi.exception.ErrorResponse;
