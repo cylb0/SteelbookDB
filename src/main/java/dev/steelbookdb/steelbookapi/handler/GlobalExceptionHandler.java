@@ -5,9 +5,12 @@ import java.util.stream.Collectors;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import dev.steelbookdb.steelbookapi.exception.BadRequestException;
 import dev.steelbookdb.steelbookapi.exception.ConflictException;
@@ -70,6 +73,31 @@ public class GlobalExceptionHandler {
             HttpStatus.BAD_REQUEST.value(),
             HttpStatus.BAD_REQUEST.getReasonPhrase(),
             errorMessages
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        String errorMessage = "Malformed JSON request";
+
+        Throwable cause = ex.getCause();
+        if (cause instanceof InvalidFormatException invalidFormatException) {
+            String fieldName = "N/A";
+            if (invalidFormatException.getPath() != null && !invalidFormatException.getPath().isEmpty()) {
+                fieldName = invalidFormatException.getPath().get(0).getFieldName();
+            }
+
+            errorMessage = String.format("Request body is not readable. Invalid value '%s' for field '%s'. Expected a valid %s.", 
+                invalidFormatException.getValue(),
+                fieldName,
+                invalidFormatException.getTargetType().getSimpleName());
+        }
+
+        ErrorResponse errorResponse = new ErrorResponse(
+            HttpStatus.BAD_REQUEST.value(),
+            HttpStatus.BAD_REQUEST.getReasonPhrase(),
+            errorMessage
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
