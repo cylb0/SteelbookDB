@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Entity
 @NoArgsConstructor
 @Table(name = "movies")
