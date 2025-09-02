@@ -1,5 +1,6 @@
 package dev.steelbookdb.steelbookapi.movie.movie;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,5 +45,12 @@ public class MovieService {
         Movie movie = movieMapper.toEntity(dto, director, genres, originalLanguage);
         Movie savedmovie = movieRepository.save(movie);
         return movieMapper.toDto(savedmovie);
+    }
+
+    public List<MovieDto> getAllMovies() {
+        return movieRepository.findAll()
+            .stream()
+            .map(movieMapper::toDto)
+            .toList();
     }
 }

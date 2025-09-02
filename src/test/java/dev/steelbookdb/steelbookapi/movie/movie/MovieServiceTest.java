@@ -168,4 +168,30 @@ class MovieServiceTest {
         verify(movieRepository, times(1)).save(any(Movie.class));
         verify(movieMapper, times(1)).toDto(any(Movie.class));
     }
+
+    @Test
+    void getAllMovies_shouldReturnAllMoviesList_whenMoviesExist() {
+        List<Movie> movies = List.of(new Movie(), new Movie());
+        when(movieRepository.findAll()).thenReturn(movies);
+        when(movieMapper.toDto(any(Movie.class))).thenReturn(MovieDto.builder().build());
+
+        List<MovieDto> result = movieService.getAllMovies();
+
+        assertNotNull(result);
+        assertEquals(movies.size(), result.size());
+        verify(movieRepository, times(1)).findAll();
+        verify(movieMapper, times(movies.size())).toDto(any(Movie.class));
+    }
+
+    @Test
+    void getAllMovies_returnsEmptyList_whenNoMoviesExist() {
+        when(movieRepository.findAll()).thenReturn(List.of());
+
+        List<MovieDto> result = movieService.getAllMovies();
+
+        assertNotNull(result);
+        assertEquals(0, result.size());
+        verify(movieRepository, times(1)).findAll();
+        verify(movieMapper, times(0)).toDto(any(Movie.class));
+    }
 }
