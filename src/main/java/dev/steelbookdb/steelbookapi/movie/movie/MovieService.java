@@ -59,4 +59,11 @@ public class MovieService {
             .orElseThrow(() -> new ResourceNotFoundException(Movie.class.getSimpleName(), id));
         return movieMapper.toDto(movie);
     }
+
+    public void deleteMovie(Long id) {
+        if (!movieRepository.existsById(id)) {
+            throw new ResourceNotFoundException(Movie.class.getSimpleName(), id);
+        }
+        movieRepository.deleteById(id);
+    }
 }

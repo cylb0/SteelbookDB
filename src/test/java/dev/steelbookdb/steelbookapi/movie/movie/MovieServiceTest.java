@@ -215,4 +215,24 @@ class MovieServiceTest {
             movieService.getMovieById(movieId);
         });
     }
+
+    @Test
+    void deleteMovie_deletesMovie_whenMovieExists() {
+        Long movieId = 1L;
+        when(movieRepository.existsById(movieId)).thenReturn(true);
+
+        movieService.deleteMovie(movieId);
+
+        verify(movieRepository, times(1)).deleteById(movieId);
+    }
+
+    @Test
+    void deleteMovie_throwsResourceNotFoundException_whenMovieDoesNotExist() {
+        Long movieId = 1L;
+        when(movieRepository.existsById(movieId)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            movieService.deleteMovie(movieId);
+        });
+    }
 }
