@@ -53,4 +53,10 @@ public class MovieService {
             .map(movieMapper::toDto)
             .toList();
     }
+
+    public MovieDto getMovieById(Long id) {
+        Movie movie = movieRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException(Movie.class.getSimpleName(), id));
+        return movieMapper.toDto(movie);
+    }
 }

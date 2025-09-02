@@ -191,4 +191,28 @@ class MovieServiceTest {
         verify(movieRepository, times(1)).findAll();
         verify(movieMapper, times(0)).toDto(any(Movie.class));
     }
+
+    @Test
+    void getMovieById_returnsMovieDto_whenMovieExists() {
+        Long movieId = 1L;
+        Movie movie = Movie.builder().id(movieId).build();
+        when(movieRepository.findById(movieId)).thenReturn(Optional.of(movie));
+        when(movieMapper.toDto(movie)).thenReturn(MovieDto.builder().build());
+
+        MovieDto result = movieService.getMovieById(movieId);
+
+        assertNotNull(result);
+        verify(movieRepository, times(1)).findById(movieId);
+        verify(movieMapper, times(1)).toDto(movie);
+    }
+
+    @Test
+    void getMovieById_throwsResourceNotFoundException_whenMovieDoesNotExist() {
+        Long movieId = 1L;
+        when(movieRepository.findById(movieId)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            movieService.getMovieById(movieId);
+        });
+    }
 }
