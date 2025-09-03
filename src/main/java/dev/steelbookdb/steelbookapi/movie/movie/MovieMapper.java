@@ -10,6 +10,7 @@ import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
 import dev.steelbookdb.steelbookapi.movie.director.Director;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
 import dev.steelbookdb.steelbookapi.movie.genre.Genre;
+import dev.steelbookdb.steelbookapi.movie.genre.GenreMapper;
 import dev.steelbookdb.steelbookapi.movie.movie.dto.CreateMovieDto;
 import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationMapper;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class MovieMapper {
 
     private final DirectorMapper directorMapper;
+    private final GenreMapper genreMapper;
     private final LanguageMapper languageMapper;
     private final MovieTranslationMapper movieTranslationMapper;
 
@@ -36,7 +38,7 @@ public class MovieMapper {
             languageMapper.toDto(movie.getOriginalLanguage()),
             movie.getGenres() != null ? movie.getGenres()
                 .stream()
-                .map(Genre::getName)
+                .map(genreMapper::toDto)
                 .collect(Collectors.toSet()) : java.util.Collections.emptySet(),
             movie.getMovieTranslations() != null ?movie.getMovieTranslations()
                 .stream()

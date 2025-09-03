@@ -5,6 +5,7 @@ import java.util.Set;
 
 import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
+import dev.steelbookdb.steelbookapi.movie.genre.dto.GenreDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslationDto;
 import lombok.Builder;
 
@@ -17,7 +18,7 @@ public record MovieDto(
     String posterUrl,
     DirectorDto director,
     LanguageDto originalLanguage,
-    Set<String> genres,
+    Set<GenreDto> genres,
     List<MovieTranslationDto> translations
 ) {
 
