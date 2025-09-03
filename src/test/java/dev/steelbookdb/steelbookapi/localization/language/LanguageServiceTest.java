@@ -159,7 +159,7 @@ class LanguageServiceTest {
         when(languageRepository.findById(languageId)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> {
-            LanguageDto result = languageService.getLanguageById(languageId);
+            languageService.getLanguageById(languageId);
         });
         
         verify(languageRepository, times(1)).findById(languageId);

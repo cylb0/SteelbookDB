@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -158,7 +157,6 @@ class MovieServiceTest {
         Language originalLanguage = Language.builder().id(originalLanguageId).build();
         Genre genre1 = Genre.builder().id(1L).build();
         Genre genre2 = Genre.builder().id(2L).build();
-        Set<Genre> genres = Set.of(genre1, genre2);
 
         MovieDto expectedDto = MovieDto.builder().build();
 
