@@ -2,6 +2,7 @@ package dev.steelbookdb.steelbookapi.movie.director;
 
 import java.util.List;
 
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.stereotype.Service;
 
 import dev.steelbookdb.steelbookapi.exception.BadRequestException;
@@ -50,35 +51,10 @@ public class DirectorService {
         Director existingDirector = directorRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(Director.class.getSimpleName(), id));
         
-        boolean updated = false;
+        boolean nameUpdated = updateNameIfPresent(dto.name(), existingDirector);
+        boolean countryUpdated = updateCountryIfPresent(dto.countryId(), existingDirector);
 
-        if (dto.name().isPresent()) {
-            String newName = dto.name().get();
-            if (newName == null || newName.isBlank()) {
-                throw new BadRequestException("Director name must not be blank");
-            }
-            if (!newName.equals(existingDirector.getName())) {
-                if (directorRepository.existsByName(newName)) {
-                    throw new DuplicateEntryException("name", newName);
-                }
-                existingDirector.setName(newName);
-                updated = true;
-            }
-        }
-
-        if (dto.countryId().isPresent()) {
-            Long newCountryId = dto.countryId().get();
-            if (newCountryId == null) {
-                throw new BadRequestException("Country ID must not be null");
-            }
-            if (newCountryId <= 0) {
-                throw new BadRequestException("Country ID must be a positive number");
-            }
-            Country newCountry = countryRepository.findById(newCountryId)
-                .orElseThrow(() -> new ResourceNotFoundException(Country.class.getSimpleName(), newCountryId));
-            existingDirector.setCountry(newCountry);
-            updated = true;
-        }
+        boolean updated = nameUpdated || countryUpdated;
 
         if (updated) {
             Director updatedDirector = directorRepository.save(existingDirector);
@@ -93,6 +69,39 @@ public class DirectorService {
             throw new ResourceNotFoundException(Director.class.getSimpleName(), id);
         }
         directorRepository.deleteById(id);
+    }
+
+    private boolean updateNameIfPresent(JsonNullable<String> newNameWrapper, Director existingDirector) {
+        if (newNameWrapper.isPresent()) {
+            String newName = newNameWrapper.get();
+            if (newName == null || newName.isBlank()) {
+                throw new BadRequestException("Director name must not be blank");
+            }
+            if (!newName.equals(existingDirector.getName())) {
+                if (directorRepository.existsByName(newName)) {
+                    throw new DuplicateEntryException("name", newName);
+                }
+                existingDirector.setName(newName);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean updateCountryIfPresent(JsonNullable<Long> newCountryIdWrapper, Director existingDirector) {
+        if (newCountryIdWrapper.isPresent()) {
+            Long newCountryId = newCountryIdWrapper.get();
+            if (newCountryId == null || newCountryId <= 0) {
+                throw new BadRequestException("Country ID must be a positive number");
+            }
+            if (existingDirector.getCountry() == null || !newCountryId.equals(existingDirector.getCountry().getId())) {
+                Country newCountry = countryRepository.findById(newCountryId)
+                    .orElseThrow(() -> new ResourceNotFoundException(Country.class.getSimpleName(), newCountryId));
+                existingDirector.setCountry(newCountry);
+                return true;
+            }
+        }
+        return false;
     }
 
 }
