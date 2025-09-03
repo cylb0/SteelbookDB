@@ -21,6 +21,8 @@ import dev.steelbookdb.steelbookapi.movie.director.Director;
 import dev.steelbookdb.steelbookapi.movie.director.DirectorMapper;
 import dev.steelbookdb.steelbookapi.movie.director.dto.DirectorDto;
 import dev.steelbookdb.steelbookapi.movie.genre.Genre;
+import dev.steelbookdb.steelbookapi.movie.genre.GenreMapper;
+import dev.steelbookdb.steelbookapi.movie.genre.dto.GenreDto;
 import dev.steelbookdb.steelbookapi.movie.movie.dto.CreateMovieDto;
 import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslation;
@@ -36,6 +38,8 @@ class MovieMapperTest {
     private MovieTranslationMapper movieTranslationMapper;
     @Mock
     private LanguageMapper languageMapper;
+    @Mock
+    private GenreMapper genreMapper;
 
     @InjectMocks
     private MovieMapper movieMapper;
@@ -86,6 +90,8 @@ class MovieMapperTest {
             .thenReturn(new MovieTranslationDto(translation.getId(), "fr", translation.getTitle(), translation.getSummary()));
         when(languageMapper.toDto(originalLanguage))
             .thenReturn(originalLanguageDto);
+        when(genreMapper.toDto(genre))
+            .thenReturn(GenreDto.builder().id(genre.getId()).name(genre.getName()).build());
 
         MovieDto dto = movieMapper.toDto(movie);
 
@@ -100,8 +106,11 @@ class MovieMapperTest {
         assertEquals(director.getId(), dto.director().id());
         assertEquals(director.getName(), dto.director().name());
 
+        assertNotNull(dto.genres());
         assertEquals(1, dto.genres().size());
-        assertTrue(dto.genres().contains(genre.getName()));
+        GenreDto mappedGenre = dto.genres().iterator().next();
+        assertEquals(genre.getId(), mappedGenre.id());
+        assertEquals(genre.getName(), mappedGenre.name());
 
         assertEquals(1, dto.translations().size());
         assertEquals(translation.getId(), dto.translations().get(0).id());
