@@ -1,5 +1,6 @@
 package dev.steelbookdb.steelbookapi.steelbook;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
@@ -16,8 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.steelbookdb.steelbookapi.movie.director.Director;
 import dev.steelbookdb.steelbookapi.movie.movie.Movie;
-import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
 import dev.steelbookdb.steelbookapi.movie.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.steelbook.disk.Disk;
 import dev.steelbookdb.steelbookapi.steelbook.disk.DiskDto;
 import dev.steelbookdb.steelbookapi.steelbook.disk.DiskMapper;
@@ -70,35 +71,42 @@ class SteelbookMapperTest {
         steelbook.setDisks(Set.of(disk));
 
         when(movieMapper.toDto(movie))
-            .thenReturn(new MovieDto(
-                movie.getId(), 
-                "The movie", 
-                2025, 
-                120, 
-                "https://example.com/poster.jpg", 
-                null, 
-                null, 
-                null
-            ));
+            .thenReturn(MovieDto.builder()
+                .id(movie.getId())
+                .title("The movie")
+                .releaseYear(2025)
+                .runtime(120)
+                .posterUrl("https://example.com/poster.jpg")
+                .build());
         when(editorMapper.toDto(editor))
-            .thenReturn(new EditorDto(editor.getId(), "Test Editor", null, null));
+            .thenReturn(EditorDto.builder()
+                .id(editor.getId())
+                .name("Test Editor")
+                .build());
         when(retailerMapper.toDto(retailer))
-            .thenReturn(new RetailerDto(retailer.getId(), "Test Retailer", null));
+            .thenReturn(RetailerDto.builder()
+                .id(retailer.getId())
+                .name("Test Retailer")
+                .website("https://example.com/poster.jpg")
+                .build());
+
         when(diskMapper.toDto(disk))
-            .thenReturn(new DiskDto(disk.getId(), null, null, false, null, null, null));
+            .thenReturn(DiskDto.builder()
+                .id(disk.getId())
+                .build());
 
         SteelbookDto dto = steelbookMapper.toDto(steelbook);
 
         assertNotNull(dto);
-        assert dto.id().equals(steelbook.getId());
-        assert dto.movies().size() == 1;
-        assert dto.movies().iterator().next().id().equals(movie.getId());
-        assert dto.editor().id().equals(editor.getId());
-        assert dto.retailers().size() == 1;
-        assert dto.retailers().iterator().next().id().equals(retailer.getId());
-        assert dto.disks().size() == 1;
-        assert dto.disks().iterator().next().id().equals(disk.getId());
-        
+        assertEquals(steelbook.getId(), dto.id());
+        assertEquals(steelbook.getId(), dto.id());
+        assertEquals(1, dto.movies().size());
+        assertEquals(movie.getId(), dto.movies().iterator().next().id());
+        assertEquals(editor.getId(), dto.editor().id());
+        assertEquals(1, dto.retailers().size());
+        assertEquals(retailer.getId(), dto.retailers().iterator().next().id());
+        assertEquals(1, dto.disks().size());
+        assertEquals(disk.getId(), dto.disks().iterator().next().id());
     }
 
     @Test

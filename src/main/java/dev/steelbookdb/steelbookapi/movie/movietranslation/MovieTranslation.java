@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @Data
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "movie_translations")
+@SuperBuilder
 public class MovieTranslation extends BaseEntity {
 
     private String title;

@@ -3,6 +3,7 @@ package dev.steelbookdb.steelbookapi.movie.movie;
 import java.util.Set;
 
 import dev.steelbookdb.steelbookapi.BaseEntity;
+import dev.steelbookdb.steelbookapi.localization.language.Language;
 import dev.steelbookdb.steelbookapi.movie.director.Director;
 import dev.steelbookdb.steelbookapi.movie.genre.Genre;
 import dev.steelbookdb.steelbookapi.movie.movietranslation.MovieTranslation;
@@ -19,13 +20,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Entity
 @NoArgsConstructor
 @Table(name = "movies")
+@SuperBuilder
 public class Movie extends BaseEntity {
 
     private String title;
@@ -36,6 +39,10 @@ public class Movie extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "director_id")
     private Director director;
+
+    @ManyToOne
+    @JoinColumn(name = "original_language_id")
+    private Language originalLanguage;
 
     @OneToMany(mappedBy = "movie")
     private Set<MovieTranslation> movieTranslations;

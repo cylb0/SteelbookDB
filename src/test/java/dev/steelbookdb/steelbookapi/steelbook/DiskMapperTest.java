@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,8 @@ import dev.steelbookdb.steelbookapi.localization.language.Language;
 import dev.steelbookdb.steelbookapi.localization.language.LanguageMapper;
 import dev.steelbookdb.steelbookapi.localization.language.dto.LanguageDto;
 import dev.steelbookdb.steelbookapi.movie.movie.Movie;
-import dev.steelbookdb.steelbookapi.movie.movie.MovieDto;
 import dev.steelbookdb.steelbookapi.movie.movie.MovieMapper;
+import dev.steelbookdb.steelbookapi.movie.movie.dto.MovieDto;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrack;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackDto;
 import dev.steelbookdb.steelbookapi.steelbook.audiotrack.AudioTrackMapper;
@@ -62,25 +61,39 @@ class DiskMapperTest {
         disk.setAudioTracks(Set.of(audioTrack));
         disk.setSubtitleLanguages(Set.of(subtitleLanguage));
 
-        when(movieMapper.toDto(movie)).thenReturn(new MovieDto(movie.getId(), "The Movie", 2025, 120, null, null, null, null));
-        when(audioTrackMapper.toDto(audioTrack)).thenReturn(new AudioTrackDto(audioTrack.getId(), null, null));
-        when(languageMapper.toDto(subtitleLanguage)).thenReturn(new LanguageDto(subtitleLanguage.getId(), "en", "English"));
+        when(movieMapper.toDto(movie)).thenReturn(MovieDto.builder()
+                .id(movie.getId())
+                .title("The movie")
+                .releaseYear(2025)
+                .runtime(120)
+                .posterUrl("https://example.com/poster.jpg")
+                .build());
+        when(audioTrackMapper.toDto(audioTrack)).thenReturn(AudioTrackDto.builder()
+                .id(audioTrack.getId())
+                .audioFormat(null)
+                .language(null)
+                .build());
+        when(languageMapper.toDto(subtitleLanguage)).thenReturn(LanguageDto.builder()
+                .id(subtitleLanguage.getId())
+                .code("en")
+                .name("English")
+                .build());
 
         DiskDto dto = diskMapper.toDto(disk);
 
         assertNotNull(dto);
-        assert disk.getId().equals(dto.id());
-        assert disk.getFormat().name().equals(dto.format());
-        assert disk.getRegion().equals(dto.region());
+        assertEquals(disk.getId(), dto.id());
+        assertEquals(disk.getFormat().name(), dto.format());
+        assertEquals(disk.getRegion(), dto.region());
         assertTrue(dto.isBonusDisk());
-        
-        assert dto.movie().id().equals(movie.getId());
 
-        assert dto.audioTracks().size() == 1;
-        assert dto.audioTracks().iterator().next().id().equals(audioTrack.getId());
+        assertEquals(dto.movie().id(), movie.getId());
 
-        assert dto.subtitleLanguages().size() == 1;
-        assert dto.subtitleLanguages().iterator().next().id().equals(subtitleLanguage.getId());
+        assertEquals(1, dto.audioTracks().size());
+        assertEquals(audioTrack.getId(), dto.audioTracks().iterator().next().id());
+
+        assertEquals(1, dto.subtitleLanguages().size());
+        assertEquals(subtitleLanguage.getId(), dto.subtitleLanguages().iterator().next().id());
     }
 
     @Test
